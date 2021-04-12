@@ -1,29 +1,33 @@
 #include <stdio.h>
 
 void startBoard();
-void verifyBoard();
+int verifyBoard();
 void updateBoard(const char squareOnBoard, const char player);
 void humanPlay(const char player);
 void computerPlay();
+void finishGame(const char gameResult);
 
-int board[3][3], gameCount, playAgain;
+int board[3][3], gameCount, playAgain, gameResult, winsPlayer1, winsPlayer2;
 char playAgainScan, playerXO1, playerXO2, singleMultiPlayer, boardViewXO[9], boardViewNum[9];
 
 int main() { 
-
+    
     playAgain = 1;
+    winsPlayer1 = 0;
+    winsPlayer2 = 0;
 
     startBoard();  
 
     while(playAgain != 0) {
-        
+
         if(gameCount%2 == 0) {
+            
             
             humanPlay(1);
 
         }else {
             
-            if( singleMultiPlayer == 'm' || singleMultiPlayer == 'M') {
+            if(singleMultiPlayer == 'm' || singleMultiPlayer == 'M') {
                 
                  humanPlay(2);
 
@@ -35,24 +39,11 @@ int main() {
             
         }
 
-        if(board[2][2] != 0){
+        gameResult = verifyBoard();
 
-            printf("Do you want to play again?(Y/N) \n");
-            scanf("%c", &playAgainScan);
-            getchar();
-            
-            if(playAgainScan == 'n' || playAgainScan == 'N') {
-
-                playAgain = 0;
-
-            }else {
-
-                playAgain++;
-                startBoard();
-
-            }
-
-        }  
+        if(gameResult != 0){
+            finishGame(gameResult); 
+        }     
 
     }
  
@@ -67,8 +58,9 @@ void startBoard() {
     int i, j;
 
     gameCount = 0;
+    gameResult = 0;
 
-    if(playAgain == 1){
+    if(playAgain == 1) {
         
         playerXO1 = 0;
 
@@ -83,13 +75,13 @@ void startBoard() {
         }
     }
 
-    for(i = 0; i < 6; i++){
+    for(i = 0; i < 6; i++) {
 
         boardViewXO[i] = '_';
         boardViewNum[i] = (i + 1) + '0';
     }
 
-    for(i = 6; i < 9; i++){
+    for(i = 6; i < 9; i++) {
 
         boardViewXO[i] = ' ';
         boardViewNum[i] = (i + 1) + '0';
@@ -106,14 +98,14 @@ void startBoard() {
             scanf("%c", &singleMultiPlayer);
             getchar();
 
-            if(singleMultiPlayer == 's' || singleMultiPlayer == 'S' || singleMultiPlayer == 'm' || singleMultiPlayer == 'M'){
+            if(singleMultiPlayer == 's' || singleMultiPlayer == 'S' || singleMultiPlayer == 'm' || singleMultiPlayer == 'M') {
                 
-                while(playerXO1 == 0){   
+                while(playerXO1 == 0) {   
                     printf("Are you chose X or O?\n");
                     scanf("%c", &playerXO1);
                     getchar();
 
-                    if(playerXO1 == 'x' || playerXO1 == 'X'){
+                    if(playerXO1 == 'x' || playerXO1 == 'X') {
                         
                         playerXO1 = 'X';
                         playerXO2 = 'O';
@@ -150,7 +142,7 @@ void startBoard() {
 
 void updateBoard(const char squareOnBoard, const char player) {
 
-    if(player == 1){
+    if(player == 1) {
 
         switch (squareOnBoard) {
             case 1:
@@ -217,7 +209,7 @@ void updateBoard(const char squareOnBoard, const char player) {
             break;
         }
 
-    } else if(player == 2){
+    } else if(player == 2) {
 
         switch (squareOnBoard) {
             case 1:
@@ -292,16 +284,156 @@ void updateBoard(const char squareOnBoard, const char player) {
     printf("_%c_|_%c_|_%c_      _%c_|_%c_|_%c_\n", boardViewXO[3], boardViewXO[4], boardViewXO[5], boardViewNum[3], boardViewNum[4], boardViewNum[5]);
     printf(" %c | %c | %c        %c | %c | %c \n", boardViewXO[6], boardViewXO[7], boardViewXO[8], boardViewNum[6], boardViewNum[7], boardViewNum[8]);
 
+    return;
+
 }
 
-void verifyBoard() {
+int verifyBoard() {
+    
+    int i, j, forPlayer1win, forPlayer2win, tie = 0;
+    
+    
 
+    for(i = 0; i < 3; i++) {
+        
+        for(j = 0; j < 3; j++) {
+            
+            if(board[i][j] != 0) {
+                tie++;
+            }
+
+        }
+    }
+
+    if(tie == 9) {
+
+        return 3;
+
+    }
+
+    for(i = 0; i < 3; i++) {
+        
+        forPlayer1win = 0;
+        forPlayer2win = 0;
+
+        for(j = 0; j < 3; j++) {
+            
+            if(board[i][j] == 1) {
+
+                forPlayer1win++;
+
+            } else if(board[i][j] == 2) {
+
+                forPlayer2win++;
+
+            }
+
+        }
+
+        if(forPlayer1win == 3) {
+
+            return 1;
+
+        }else if(forPlayer2win == 3) {
+                
+            return 2;
+
+        }
+
+    }
+
+    
+    for(j = 0; j < 3; j++) {
+        
+        forPlayer1win = 0;
+        forPlayer2win = 0;
+
+        for(i = 0; i < 3; i++) {
+            
+            if(board[i][j] == 1) {
+
+                forPlayer1win++;
+
+            } else if(board[i][j] == 2) {
+
+                forPlayer2win++;
+
+            }
+
+        }
+
+        if(forPlayer1win == 3) {
+
+            return 1;
+
+        }else if(forPlayer2win == 3) {
+                
+            return 2;
+
+        }
+
+    }
+
+    forPlayer1win = 0;
+    forPlayer2win = 0;
+
+    for(i = 0; i < 3; i++) {
+        
+        if(board[i][i] == 1) {
+
+            forPlayer1win++;
+
+        } else if(board[i][i] == 2) {
+
+            forPlayer2win++;
+
+        }
+
+    }
+    
+    if(forPlayer1win == 3) {
+
+        return 1;
+
+    }else if(forPlayer2win == 3) {
+                
+        return 2;
+
+    }
+
+    forPlayer1win = 0;
+    forPlayer2win = 0;
+
+    for(i = 0; i < 3; i++) {
+
+        if(board[i][2-i] == 1) {
+
+            forPlayer1win++;
+
+        }else if (board[i][2-i] == 2) {
+            
+            forPlayer2win++;
+
+        }
+    }    
+    
+    if(forPlayer1win == 3) {
+
+        return 1;
+
+    }else if(forPlayer2win == 3) {
+                
+        return 2;
+
+    }
+
+    return 0;
 }
 
 void humanPlay(const char player) {
 
     int play = 0;
-    if(player == 1){
+    if(player == 1) {
 
         printf("Player 1 chose a number for your play: \n");
         scanf("%d", &play);
@@ -320,7 +452,7 @@ void humanPlay(const char player) {
     switch(play) {
         
         case 1:
-            if(board[0][0] == 0){
+            if(board[0][0] == 0) {
 
                 board[0][0] = player;
                 updateBoard(1, player);
@@ -334,7 +466,7 @@ void humanPlay(const char player) {
         break;
 
         case 2:
-            if(board[0][1] == 0){
+            if(board[0][1] == 0) {
 
                 board[0][1] = player;
                 updateBoard(2, player);
@@ -348,7 +480,7 @@ void humanPlay(const char player) {
         break;
 
         case 3:
-            if(board[0][2] == 0){
+            if(board[0][2] == 0) {
 
                 board[0][2] = player;
                 updateBoard(3, player);
@@ -362,7 +494,7 @@ void humanPlay(const char player) {
         break;
 
         case 4:
-               if(board[1][0] == 0){
+               if(board[1][0] == 0) {
 
                 board[1][0] = player;
                 updateBoard(4, player); 
@@ -376,7 +508,7 @@ void humanPlay(const char player) {
         break;
 
         case 5:
-            if(board[1][1] == 0){
+            if(board[1][1] == 0) {
 
                 board[1][1] = player;
                 updateBoard(5, player);
@@ -390,7 +522,7 @@ void humanPlay(const char player) {
         break;
 
         case 6:
-            if(board[1][2] == 0){
+            if(board[1][2] == 0) {
 
                 board[1][2] = player;
                 updateBoard(6, player);
@@ -404,7 +536,7 @@ void humanPlay(const char player) {
         break;
 
         case 7:
-            if(board[2][0] == 0){
+            if(board[2][0] == 0) {
 
                 board[2][0] = player;
                 updateBoard(7, player);
@@ -418,7 +550,7 @@ void humanPlay(const char player) {
         break;
 
         case 8:
-            if(board[2][1] == 0){
+            if(board[2][1] == 0) {
 
                 board[2][1] = player;
                 updateBoard(8, player);
@@ -432,7 +564,7 @@ void humanPlay(const char player) {
         break;
 
         case 9:
-            if(board[2][2] == 0){
+            if(board[2][2] == 0) {
 
                 board[2][2] = player;
                 updateBoard(9, player);
@@ -448,4 +580,49 @@ void humanPlay(const char player) {
     }
 
     return;
+}
+
+void finishGame(const char gameResult) {
+    
+    if(singleMultiPlayer == 'm' || singleMultiPlayer == 'M') {
+         
+        if(gameResult == 1) {
+
+            winsPlayer1++;
+            printf("Player 1 win!\n");
+
+        }else if(gameResult == 2) {
+
+            winsPlayer2++;
+            printf("Player 2 win!\n");
+
+        }else if(gameResult == 3){
+
+            updateBoard(0, 0);
+            printf("Tie \n");
+
+        }
+
+        printf("Player 1 win: %d.\nPlayer 2 win: %d.\nTotal of matchs: %d.", winsPlayer1, winsPlayer2, gameCount);
+        printf("Do you want to play again?(Y/N) \n");
+        scanf("%c", &playAgainScan);
+        getchar();
+            
+        if(playAgainScan == 'n' || playAgainScan == 'N') {
+
+            playAgain = 0;
+
+        }else {
+
+            playAgain++;
+            startBoard();
+
+        }
+
+    }else {
+
+        //Finish game for match with computer
+
+    }
+
 }
