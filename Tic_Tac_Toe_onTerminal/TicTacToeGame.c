@@ -7,18 +7,14 @@ void humanPlay(const char player);
 void computerPlay();
 void finishGame(const char gameResult);
 
-int board[3][3], gameRound, playAgain, gameResult, winsPlayer1, winsPlayer2;
+short int board[3][3], gameRound, playAgain_Counter = 0, winsPlayer1, winsPlayer2;
 char playerXO1, playerXO2, singleMultiPlayer, boardViewXO[9], boardViewNum[9];
 
 int main() { 
-    
-    playAgain = 1;
-    winsPlayer1 = 0;
-    winsPlayer2 = 0;
 
     startBoard();  
 
-    while (playAgain != 0) {
+    while (playAgain_Counter != 0) {
 
         if (gameRound%2 == 0) {
             
@@ -39,7 +35,7 @@ int main() {
             
         }
 
-        gameResult = verifyBoard();
+        short int gameResult = verifyBoard();
 
         if (gameResult != 0) {
 
@@ -60,10 +56,12 @@ void startBoard() {
     int i, j;
 
     gameRound = 0;
-    gameResult = 0;
 
-    if (playAgain == 1) {
+    if (playAgain_Counter == 0) {
         
+        playAgain_Counter = 1;
+        winsPlayer1 = 0;
+        winsPlayer2 = 0;
         playerXO1 = 0;
 
     }
@@ -435,7 +433,6 @@ int verifyBoard() {
 
 void humanPlay(const char player) {
 
-    char trash;
     short int play = 0;
 
     if (player == 1) {
@@ -655,13 +652,13 @@ void finishGame(const char gameResult) {
          
         if (gameResult == 1) {
 
-            winsPlayer1++;
             printf("Player 1 win!\n");
+            winsPlayer1++;
 
         }else if (gameResult == 2) {
 
-            winsPlayer2++;
             printf("Player 2 win!\n");
+            winsPlayer2++;
 
         }else if (gameResult == 3){
 
@@ -670,18 +667,18 @@ void finishGame(const char gameResult) {
 
         }
 
-        printf("Player 1 win: %d.\nPlayer 2 win: %d.\nTotal of matchs: %d.", winsPlayer1, winsPlayer2, gameRound);
+        printf("Player 1 win: %d.\nPlayer 2 win: %d.\nTotal of matchs: %d.\n", winsPlayer1, winsPlayer2, playAgain_Counter);
         printf("Do you want to play again?(Y/N) \n");
         scanf("%c", &playAgainScan);
         getchar();
             
         if (playAgainScan == 'n' || playAgainScan == 'N') {
 
-            playAgain = 0;
+            playAgain_Counter = 0;
 
         }else {
 
-            playAgain++;
+            playAgain_Counter++;
             startBoard();
 
         }
