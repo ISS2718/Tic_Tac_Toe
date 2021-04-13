@@ -155,7 +155,9 @@
     <ResourceCompile Include="Tic_Tac_Toe.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="main.ico" />
     <Image Include="small.ico" />
+    <Image Include="TicTacToe.bmp" />
     <Image Include="Tic_Tac_Toe.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

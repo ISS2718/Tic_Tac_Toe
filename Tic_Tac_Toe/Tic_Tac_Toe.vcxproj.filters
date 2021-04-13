@@ -39,5 +39,11 @@
     <Image Include="Tic_Tac_Toe.ico">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="TicTacToe.bmp">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="main.ico">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
 </Project>
