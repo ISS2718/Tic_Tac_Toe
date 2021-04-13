@@ -18,7 +18,6 @@ int main() {
 
         if (gameRound%2 == 0) {
             
-            
             humanPlay(1);
 
         }else {
@@ -66,22 +65,22 @@ void startBoard() {
 
     }
 
-    for(i = 0; i < 3; i++) {
+    for (i = 0; i < 3; i++) {
         
-        for(j = 0; j < 3; j++) {
+        for (j = 0; j < 3; j++) {
             
             board[i][j] = 0;
 
         }
     }
 
-    for(i = 0; i < 6; i++) {
+    for (i = 0; i < 6; i++) {
 
         boardViewXO[i] = '_';
         boardViewNum[i] = (i + 1) + '0';
     }
 
-    for(i = 6; i < 9; i++) {
+    for (i = 6; i < 9; i++) {
 
         boardViewXO[i] = ' ';
         boardViewNum[i] = (i + 1) + '0';
@@ -290,145 +289,133 @@ void updateBoard(const char squareOnBoard, const char player) {
 }
 
 int verifyBoard() {
-    
-    int i, j, forPlayer1win, forPlayer2win, tie = 0;
-    
-    
 
-    for(i = 0; i < 3; i++) {
-        
-        for(j = 0; j < 3; j++) {
-            
-            if (board[i][j] != 0) {
-                tie++;
-            }
+	short int i, j, forPlayer1win, forPlayer2win;
 
-        }
-    }
+	for (i = 0; i < 3; i++) {
 
-    if (tie == 9) {
+		forPlayer1win = 0;
+		forPlayer2win = 0;
 
-        return 3;
+		for (j = 0; j < 3; j++) {
 
-    }
+			if (board[i][j] == 1) {
 
-    for(i = 0; i < 3; i++) {
-        
-        forPlayer1win = 0;
-        forPlayer2win = 0;
+				forPlayer1win++;
 
-        for(j = 0; j < 3; j++) {
-            
-            if (board[i][j] == 1) {
+			}else if (board[i][j] == 2) {
 
-                forPlayer1win++;
+				forPlayer2win++;
 
-            } else if (board[i][j] == 2) {
+			}
 
-                forPlayer2win++;
+		}
 
-            }
+		if (forPlayer1win == 3) {
 
-        }
+			return 1;
 
-        if (forPlayer1win == 3) {
+		}else if (forPlayer2win == 3) {
 
-            return 1;
+			return 2;
 
-        }else if (forPlayer2win == 3) {
-                
-            return 2;
+		}
 
-        }
+	}
 
-    }
 
-    
-    for(j = 0; j < 3; j++) {
-        
-        forPlayer1win = 0;
-        forPlayer2win = 0;
+	for (j = 0; j < 3; j++) {
 
-        for(i = 0; i < 3; i++) {
-            
-            if (board[i][j] == 1) {
+		forPlayer1win = 0;
+		forPlayer2win = 0;
 
-                forPlayer1win++;
+		for (i = 0; i < 3; i++) {
 
-            } else if (board[i][j] == 2) {
+			if (board[i][j] == 1) {
 
-                forPlayer2win++;
+				forPlayer1win++;
 
-            }
+			}else if (board[i][j] == 2) {
 
-        }
+				forPlayer2win++;
 
-        if (forPlayer1win == 3) {
+			}
 
-            return 1;
+		}
 
-        }else if (forPlayer2win == 3) {
-                
-            return 2;
+		if (forPlayer1win == 3) {
 
-        }
+			return 1;
 
-    }
+		}else if (forPlayer2win == 3) {
 
-    forPlayer1win = 0;
-    forPlayer2win = 0;
+			return 2;
 
-    for(i = 0; i < 3; i++) {
-        
-        if (board[i][i] == 1) {
+		}
 
-            forPlayer1win++;
+	}
 
-        } else if (board[i][i] == 2) {
+	forPlayer1win = 0;
+	forPlayer2win = 0;
 
-            forPlayer2win++;
+	for (i = 0; i < 3; i++) {
 
-        }
+		if (board[i][i] == 1) {
 
-    }
-    
-    if (forPlayer1win == 3) {
+			forPlayer1win++;
 
-        return 1;
+		}else if (board[i][i] == 2) {
 
-    }else if (forPlayer2win == 3) {
-                
-        return 2;
+			forPlayer2win++;
 
-    }
+		}
 
-    forPlayer1win = 0;
-    forPlayer2win = 0;
+	}
 
-    for(i = 0; i < 3; i++) {
+	if (forPlayer1win == 3) {
 
-        if (board[i][2-i] == 1) {
+		return 1;
 
-            forPlayer1win++;
+	}else if (forPlayer2win == 3) {
 
-        }else if (board[i][2-i] == 2) {
-            
-            forPlayer2win++;
+		return 2;
 
-        }
-    }    
-    
-    if (forPlayer1win == 3) {
+	}
 
-        return 1;
+	forPlayer1win = 0;
+	forPlayer2win = 0;
 
-    }else if (forPlayer2win == 3) {
-                
-        return 2;
+	for (i = 0; i < 3; i++) {
 
-    }
+		if (board[i][2 - i] == 1) {
 
-    return 0;
+			forPlayer1win++;
+
+		}else if (board[i][2 - i] == 2) {
+
+			forPlayer2win++;
+
+		}
+
+	}
+
+	if (forPlayer1win == 3) {
+
+		return 1;
+
+	}else if (forPlayer2win == 3) {
+
+		return 2;
+
+	}
+
+	if (gameRound >= 9) {
+
+		return 3;
+
+	}
+
+	return 0;
 }
 
 void humanPlay(const char player) {
