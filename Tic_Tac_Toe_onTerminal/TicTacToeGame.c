@@ -435,23 +435,40 @@ int verifyBoard() {
 
 void humanPlay(const char player) {
 
-    int play = 0;
+    char trash;
+    short int play = 0;
 
     if (player == 1) {
 
         printf("Player 1 chose a number for your play: \n");
         scanf("%d", &play);
-        getchar();
+        
+        if (getchar() != '\n') {
+
+            while(getchar() != '\n');
+            updateBoard(0, 0);
+            printf("Player 1 chose a valid number for your play!\n");        
+            return;
+
+        }
 
     }else {
 
         printf("Player 2 chose a number for your play: \n");
         scanf("%d", &play);
-        getchar();
-        
+
+        if (getchar() != '\n') {
+
+            while(getchar() != '\n');     
+            updateBoard(0, 0);
+            printf("Player 2 chose a valid number for your play!\n");        
+            return;
+
+        }
+
     }
     
-    if ( ( (play * 10) /play) <= 9) {
+    if (play <= 9 && play != 0) {
 
         switch(play) {
         
@@ -464,7 +481,8 @@ void humanPlay(const char player) {
                     updateBoard(1, player);
 
                 }else {
-
+                    
+                    updateBoard(0, 0);
                     printf("This square have been used!\n");
                     
                 }
@@ -480,7 +498,8 @@ void humanPlay(const char player) {
                     updateBoard(2, player);
 
                 }else {
-
+                    
+                    updateBoard(0, 0);
                     printf("This square have been used!\n");
 
                 }
@@ -496,7 +515,8 @@ void humanPlay(const char player) {
                     updateBoard(3, player);
 
                 }else {
-
+                    
+                    updateBoard(0, 0);
                     printf("This square have been used!\n");
 
                 }
@@ -512,7 +532,8 @@ void humanPlay(const char player) {
                     updateBoard(4, player); 
 
                 }else {
-
+                    
+                    updateBoard(0, 0);
                     printf("This square have been used!\n");
 
                 }
@@ -528,7 +549,8 @@ void humanPlay(const char player) {
                     updateBoard(5, player);
 
                 }else {
-
+                    
+                    updateBoard(0, 0);
                     printf("This square have been used!\n");
 
                 } 
@@ -544,7 +566,8 @@ void humanPlay(const char player) {
                     updateBoard(6, player);
 
                 }else {
-
+                    
+                    updateBoard(0, 0);
                     printf("This square have been used!\n");
 
                 }
@@ -560,7 +583,8 @@ void humanPlay(const char player) {
                     updateBoard(7, player);
 
                 }else {
-
+                    
+                    updateBoard(0, 0);
                     printf("This square have been used!\n");
 
                 } 
@@ -576,7 +600,8 @@ void humanPlay(const char player) {
                     updateBoard(8, player);
 
                 }else {
-
+                    
+                    updateBoard(0, 0);
                     printf("This square have been used!\n");
 
                 }
@@ -592,7 +617,8 @@ void humanPlay(const char player) {
                     updateBoard(9, player);
 
                 }else {
-
+                    
+                    updateBoard(0, 0);
                     printf("This square have been used!\n");
 
                 }
@@ -601,23 +627,24 @@ void humanPlay(const char player) {
 
         }
 
-    } else{
+    } else {
 
         if (player == 1) {
             
             updateBoard(0, 0);
-            printf("Player 1 chose a valid number for your play! \n");
+            printf("Player 1 chose a valid number for your play!\n");
 
         }else {
 
             updateBoard(0, 0);
-            printf("Player 2 chose a valid number for your play! \n");
+            printf("Player 2 chose a valid number for your play!\n");
 
-        } 
+        }
 
     }
-
+    
     return;
+
 }
 
 void finishGame(const char gameResult) {
