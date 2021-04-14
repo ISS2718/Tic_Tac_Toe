@@ -63,4 +63,13 @@ This **FANTASTIC** icon its made in Paint. :laughing:
 ## My code 
 
 Have a mix of C/C++ and its all only file [**Tic_Tac_Toe.cpp**](https://github.com/ISS2718/Tic_Tac_Toe/blob/master/Tic_Tac_Toe/Tic_Tac_Toe.cpp) yet, but for my first GUI made I understand how to work the basic of **wxWidgets** lib.
+
+## Tic Tac Toe on Terminal
+
+I made a version for terminal for created my logic of the game, but I realy liked of this challenge and I want upgrade them
+
+### Screens v1.0
+![Initial Screen](https://github.com/ISS2718/Tic_Tac_Toe/blob/master/Tic_Tac_Toe_onTerminal/Images/Initialize_Screen_v1.0.PNG)
+![Start Game](https://github.com/ISS2718/Tic_Tac_Toe/blob/master/Tic_Tac_Toe_onTerminal/Images/Game_Start_v1.0.PNG)
+![Finish Game](https://github.com/ISS2718/Tic_Tac_Toe/blob/master/Tic_Tac_Toe_onTerminal/Images/Finish_Game_v1.0.PNG)
 ***
