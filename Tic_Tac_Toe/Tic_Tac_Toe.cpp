@@ -6,6 +6,7 @@
 
 short int board[3][3], gameRound, victorios, scorePlayer1, scorePlayer2, gameMatchs, gameTied;
 
+
 void startBoard() {
 
 	int i, j;
@@ -131,7 +132,7 @@ class TicTacToe : public wxApp
 	public:
 		virtual bool OnInit();
 };
-
+	
 class MainFrame : public wxFrame
 {
 	public:
@@ -160,6 +161,7 @@ class MainFrame : public wxFrame
 		wxStatusBar* m_statusBar;
 
 		char m_msgStatusBar[200];
+		char m_About_Message[200];
 
 	private:
 		void OnNewGame(wxCommandEvent& event);
@@ -485,7 +487,9 @@ void MainFrame::OnShowScoreboard(wxCommandEvent& event) {
 }
 
 void MainFrame::OnAbout(wxCommandEvent& event) {
-	wxMessageBox("This is Tic Tac Toe example in C/C++", "About Tic Tac Toe", wxOK | wxICON_INFORMATION);
+	strcpy(m_About_Message, "This is Tic Tac Toe example in C / C++.\n");
+	strcat(m_About_Message, "Made by Isaac Santos Soares in 2021, with instruction of teacher Pietro Martins De Oliveira on YouTube.\n");
+	wxMessageBox(m_About_Message, "About Tic Tac Toe", wxOK | wxICON_INFORMATION);
 }
 
 
